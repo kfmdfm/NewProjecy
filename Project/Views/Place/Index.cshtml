@@ -1,0 +1,46 @@
+﻿@model List<Project.Models.Place>
+
+@{
+    ViewData["Title"] = "Главная";
+}
+<div class="hero-section">
+    <div class="hero-overlay">
+        <div class="container hero-content">
+            <h1 class="hero-title">Открой Владикавказ</h1>
+            <p class="hero-subtitle">Лучшие достопримечательности, маршруты и красивые места города</p>
+            <a href="#places" class="hero-button">Смотреть места</a>
+        </div>
+    </div>
+</div>
+
+<div id="places" class="container mt-5">
+    <h2 class="text-center mb-5 fw-bold">Достопримечательности</h2>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var place in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 place-card-hover">
+                    <div class="position-relative">
+                        <img src="@(string.IsNullOrEmpty(place.PhotoUrl) ? "/Images/default.jpg" : place.PhotoUrl)" 
+                             class="card-img-top" 
+                             alt="@place.Name" 
+                             style="height: 220px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 shadow-sm">@place.Category</span>
+                    </div>
+
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold">@place.Name</h5>
+                        <p class="card-text text-muted small">
+                            @(place.Description.Length > 120 ? place.Description.Substring(0, 117) + "..." : place.Description)
+                        </p>
+                    </div>
+
+                    <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                        <a asp-action="Details" asp-route-id="@place.Id" class="btn btn-outline-primary w-100 rounded-pill">Подробнее</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

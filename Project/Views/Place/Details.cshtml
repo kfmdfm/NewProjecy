@@ -1,0 +1,60 @@
+﻿@model Project.Models.Place
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container mt-5">
+    <div class="card shadow border-0 overflow-hidden mb-4" style="border-radius: 24px;">
+        <div class="row g-0">
+            <div class="col-md-6">
+                <img src="@Model.PhotoUrl" class="img-fluid h-100" style="object-fit:cover; min-height: 400px;" onerror="this.src='/Images/default.jpg'">
+            </div>
+            <div class="col-md-6 p-4 d-flex flex-column justify-content-center bg-white">
+                <span class="place-category mb-2">@Model.Category</span>
+                <h1 class="display-5 fw-bold">@Model.Name</h1>
+                <p class="lead mt-3 text-muted">@Model.Description</p>
+                
+                <div class="mt-4 d-flex gap-2">
+                    <a asp-action="Index" class="btn btn-outline-secondary rounded-pill px-4">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="fw-bold mb-3">Маршрут до места</h3>
+    <div id="map" style="height: 500px; width: 100%; border-radius: 24px;" class="shadow-sm border"></div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var destLat = parseFloat("@Model.Latitude".replace(',', '.'));
+            var destLng = parseFloat("@Model.Longitude".replace(',', '.'));
+            var userLat = 43.0210; 
+            var userLng = 44.6830;
+            var map = L.map('map').setView([destLat, destLng], 14);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap'
+            }).addTo(map);
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(userLat, userLng),
+                    L.latLng(destLat, destLng)
+                ],
+                lineOptions: {
+                    styles: [{ color: '#2563eb', opacity: 0.8, weight: 6 }]
+                },
+                language: 'ru',
+                show: true, 
+                addWaypoints: false, 
+                routeWhileDragging: false
+            }).addTo(map);
+        });
+    </script>
+}

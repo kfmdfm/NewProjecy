@@ -1,0 +1,41 @@
+﻿@model List<Project.Models.Place>
+
+@{
+    ViewData["Title"] = "Карта достопримечательностей";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Карта Владикавказа</h1>
+    
+    <div id="map" style="height: 70vh; width: 100%; border-radius: 15px; z-index: 1;" class="shadow border"></div>
+</div>
+
+@section Scripts {
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        var map = L.map('map').setView([43.0245, 44.6820], 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        @foreach (var place in Model)
+        {
+            var lat = place.Latitude.ToString().Replace(",", ".");
+            var lng = place.Longitude.ToString().Replace(",", ".");
+
+            <text>
+            L.marker([@lat, @lng])
+                .addTo(map)
+                .bindPopup(`
+                    <div style="text-align:center">
+                        <strong>@place.Name</strong><br>
+                        <small>@place.Category</small><br>
+                        <a href="/Place/Details/@place.Id" class="btn btn-sm btn-primary mt-2" style="color:white; padding:2px 10px; font-size:12px; text-decoration:none; border-radius:4px; display:inline-block;">Подробнее</a>
+                    </div>
+                `);
+            </text>
+        }
+    </script>
+}

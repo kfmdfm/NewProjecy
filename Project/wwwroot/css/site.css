@@ -1,0 +1,201 @@
+
+body {
+    background-image: url('/Images/mountains.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2937;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+.navbar {
+    background: #111827 !important;
+    padding: 1rem 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
+    color: white !important;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.8) !important;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+    .nav-link:hover {
+        color: #60a5fa !important;
+    }
+
+.hero-section {
+    height: 90vh;
+    min-height: 600px;
+    background-image: url('/Images/hero.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    image-rendering: -webkit-optimize-contrast;
+    position: relative;
+    border-radius: 0 0 50px 50px;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    /* backdrop-filter: blur(2px);*/
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+    color: white;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    max-width: 650px;
+    margin-bottom: 2.5rem;
+    color: rgba(255,255,255,0.9);
+}
+
+.hero-button {
+    display: inline-block;
+    padding: 16px 36px;
+    background: #2563eb;
+    color: white !important;
+    text-decoration: none;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+    .hero-button:hover {
+        background: #1d4ed8;
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+    }
+
+.place-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 35px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+    .place-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+    }
+
+.place-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+
+.place-content {
+    padding: 30px;
+}
+
+.place-category {
+    display: inline-block;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 6px 16px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+}
+
+.place-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+}
+
+.place-description {
+    color: #4b5563;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+}
+
+.details-btn {
+    display: inline-block;
+    background: #111827;
+    color: white !important;
+    padding: 12px 24px;
+    border-radius: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+    .details-btn:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+    }
+
+.details-image {
+    width: 100%;
+    border-radius: 35px;
+    object-fit: cover;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+
+#map {
+    border: 8px solid white;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    border-radius: 35px;
+    z-index: 1;
+}
+
+.leaflet-routing-container {
+    background: white !important;
+    border-radius: 15px !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    border: none !important;
+    padding: 10px !important;
+    font-family: inherit !important;
+}
+
+.category-pill {
+    background: white;
+    padding: 12px 24px;
+    border-radius: 18px;
+    font-weight: 600;
+    border: 1px solid #e5e7eb;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+    .category-pill:hover {
+        border-color: #2563eb;
+        color: #2563eb;
+        background: #f8faff;
+    }
