@@ -1,0 +1,29 @@
+﻿@model List<Project.Models.Service>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="fw-bold m-0">Туристические Услуги</h2>
+        <a asp-action="Cart" class="btn btn-outline-dark rounded-pill px-4">
+            <i class="bi bi-cart"></i> Перейти в корзину
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var service in Model)
+        {
+            <div class="col">
+                <div class="place-card">
+                    <img src="@service.PhotoUrl" class="place-image">
+                    <div class="place-content">
+                        <h4 class="fw-bold mb-2">@service.Name</h4>
+                        <p class="text-muted small">@service.Description</p>
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <span class="fw-bold text-primary fs-5">@service.Price.ToString("N0") ₽</span>
+                            <a asp-action="AddToCart" asp-route-id="@service.Id" class="details-btn">Купить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

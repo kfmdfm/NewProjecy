@@ -3,10 +3,26 @@
 @{
     ViewData["Title"] = "Главная";
 }
+
 <div class="hero-section">
+    
+    <div id="heroCarousel" class="carousel slide carousel-fade h-100" data-bs-ride="carousel" data-bs-interval="4000">
+        <div class="carousel-inner h-100">
+            <div class="carousel-item active h-100">
+                <img src="/Images/HeroSection/Hero1.jpg" class="d-block w-100 h-100" style="object-fit: cover;" alt="Владикавказ 1">
+            </div>
+            <div class="carousel-item h-100">
+                <img src="/Images/HeroSection/Hero2.jpg" class="d-block w-100 h-100" style="object-fit: cover;" alt="Владикавказ 2">
+            </div>
+            <div class="carousel-item h-100">
+                <img src="/Images/HeroSection/Hero3.jpg" class="d-block w-100 h-100" style="object-fit: cover;" alt="Владикавказ 3">
+            </div>
+        </div>
+    </div>
+
     <div class="hero-overlay">
         <div class="container hero-content">
-            <h1 class="hero-title">Открой Владикавказ</h1>
+            <h1 class="hero-title">Туристическая карта</h1>
             <p class="hero-subtitle">Лучшие достопримечательности, маршруты и красивые места города</p>
             <a href="#places" class="hero-button">Смотреть места</a>
         </div>
@@ -14,33 +30,82 @@
 </div>
 
 <div id="places" class="container mt-5">
-    <h2 class="text-center mb-5 fw-bold">Достопримечательности</h2>
-
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        @foreach (var place in Model)
-        {
-            <div class="col">
-                <div class="card h-100 shadow-sm border-0 place-card-hover">
-                    <div class="position-relative">
-                        <img src="@(string.IsNullOrEmpty(place.PhotoUrl) ? "/Images/default.jpg" : place.PhotoUrl)" 
-                             class="card-img-top" 
-                             alt="@place.Name" 
-                             style="height: 220px; object-fit: cover; border-radius: 10px 10px 0 0;">
-                        <span class="badge bg-primary position-absolute top-0 end-0 m-3 shadow-sm">@place.Category</span>
-                    </div>
-
-                    <div class="card-body p-4">
-                        <h5 class="card-title fw-bold">@place.Name</h5>
-                        <p class="card-text text-muted small">
-                            @(place.Description.Length > 120 ? place.Description.Substring(0, 117) + "..." : place.Description)
-                        </p>
-                    </div>
-
-                    <div class="card-footer bg-transparent border-0 p-4 pt-0">
-                        <a asp-action="Details" asp-route-id="@place.Id" class="btn btn-outline-primary w-100 rounded-pill">Подробнее</a>
-                    </div>
+    
+    <form asp-action="Index" method="get" class="p-4 mb-5 shadow-sm bg-white" style="border-radius: 25px;">
+        <div class="row g-3 align-items-center">
+            
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0 text-muted" style="border-radius: 15px 0 0 15px;">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" name="searchString" value="@ViewBag.CurrentSearch" 
+                           class="form-control border-start-0 py-2 ps-0" 
+                           placeholder="Поиск по названию..." style="border-radius: 0 15px 15px 0;" />
                 </div>
             </div>
-        }
-    </div>
+
+            <div class="col-md-4">
+                <select name="category" class="form-select py-2" style="border-radius: 15px;">
+                    <option value="Все" selected="@(ViewBag.CurrentCategory == "All" || ViewBag.CurrentCategory == null)">Все категории</option>
+                    <option value="Религия" selected="@(ViewBag.CurrentCategory == "Religion")">Религия</option>
+                    <option value="Парки" selected="@(ViewBag.CurrentCategory == "Parks")">Парки</option>
+                    <option value="Культура и музеи" selected="@(ViewBag.CurrentCategory == "Culture")">Культура и музеи</option>
+                    <option value="Улицы" selected="@(ViewBag.CurrentCategory == "Streets")">Исторические улицы</option>
+                    <option value="Развлечения" selected="@(ViewBag.CurrentCategory == "Entertaiment")">Развлечения</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 d-flex gap-2">
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold" style="border-radius: 15px;">
+                    Применить
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary w-50 py-2" style="border-radius: 15px;">
+                    Сбросить
+                </a>
+            </div>
+
+        </div>
+    </form>
+
+    <h2 class="text-center mb-5 fw-bold">Достопримечательности</h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="text-center p-5 bg-white border shadow-sm my-4" style="border-radius: 25px;">
+            <i class="bi bi-geo-alt-fill text-muted display-4"></i>
+            <p class="lead text-muted mt-3">Ничего не найдено по вашему запросу.</p>
+            <a asp-action="Index" class="btn btn-sm btn-outline-primary rounded-pill px-4">Показать всё</a>
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var place in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 place-card-hover">
+                        <div class="position-relative">
+                            <img src="@(string.IsNullOrEmpty(place.PhotoUrl) ? "/Images/default.jpg" : place.PhotoUrl)" 
+                                 class="card-img-top" 
+                                 alt="@place.Name" 
+                                 style="height: 220px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                            <span class="badge bg-primary position-absolute top-0 end-0 m-3 shadow-sm">@place.Category</span>
+                        </div>
+
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold">@place.Name</h5>
+                            <p class="card-text text-muted small">
+                                @(place.Description.Length > 120 ? place.Description.Substring(0, 117) + "..." : place.Description)
+                            </p>
+                        </div>
+
+                        <div class="card-footer bg-transparent border-0 p-4 pt-0">
+                            <a asp-action="Details" asp-route-id="@place.Id" class="btn btn-outline-primary w-100 rounded-pill">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
 </div>
